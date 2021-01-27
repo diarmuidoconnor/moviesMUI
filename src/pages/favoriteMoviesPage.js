@@ -4,7 +4,7 @@ const FavoriteMoviesPage = () => {
   const toDo = () => true;
 
   const movies = JSON.parse(localStorage.getItem("favorites"));
-  console.log(movies[0]);
+  // console.log(movies[0]);
 
   return (
     <PageTemplate
