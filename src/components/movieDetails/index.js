@@ -35,8 +35,8 @@ const MovieDetails = ({ movie }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const toggleDrawer = (open) => (event) => {
-    setDrawerOpen(open);
+  const toggleDrawer = (open) => {
+    return () => setDrawerOpen(open);
   };
 
   return (
