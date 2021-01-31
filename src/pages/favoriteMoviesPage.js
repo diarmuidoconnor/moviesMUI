@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
-const FavoriteMoviesPage = () => {
-  const toDo = () => true;
+import { MoviesContext } from "../contexts/moviesContext";
 
-  const movies = JSON.parse(localStorage.getItem("favorites"));
-  // console.log(movies[0]);
+const FavoriteMoviesPage = () => {
+  const context = useContext(MoviesContext);
+  const { movies  } = context;
+  const favoriteMovies = movies.filter(m => m.favorite  ) 
+
+  const toDo = () => true;
 
   return (
     <PageTemplate
       title="Favorite Movies"
-      movies={movies}
+      movies={favoriteMovies}
+      action={(movie) => {
+        return null 
+      }}
       selectFavorite={toDo}
     />
   );
