@@ -5,9 +5,7 @@ export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
   const [movies, setMovies] = useState([]);
-  const favorites = movies.filter((m) => m.favorite);
-  localStorage.setItem("favorites", JSON.stringify(favorites));
-
+  
   const addToFavorites = (movieId) => {
     setMovies((movies) => {
       const updatedMovies = movies.map((m) =>
@@ -16,6 +14,15 @@ const MoviesContextProvider = (props) => {
       return updatedMovies;
     });
   };
+
+  const removeFromFavorites = (movieId) => {
+    setMovies((movies) => {
+      const updatedMovies = movies.map((m) =>
+        m.id === movieId ? { ...m, favorite: false } : m
+      );
+      return updatedMovies;
+    });
+  };  
 
   useEffect(() => {
     getMovies().then((movies) => {
@@ -29,6 +36,7 @@ const MoviesContextProvider = (props) => {
       value={{
         movies: movies,
         addToFavorites: addToFavorites,
+        removeFromFavorites: removeFromFavorites,
       }}
     >
       {props.children}
