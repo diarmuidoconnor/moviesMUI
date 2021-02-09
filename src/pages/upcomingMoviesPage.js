@@ -23,7 +23,10 @@ const UpcomingMovieListPage = () => {
       <PageTemplate 
         title='Upcoming Movies'
         movies={movies}
-        selectFavorite={addToFavorites}    
+        selectFavorite={addToFavorites}  
+        action={(movie) => {
+          return null 
+        }}  
       />
   );
 };
