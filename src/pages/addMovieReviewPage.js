@@ -1,17 +1,26 @@
 import React from "react";
-import PageTemplate from "../components/templateMovieListPage";
+import PageTemplate from "../components/templateMoviePage";
+import useMovie from "../hooks/useMovie";
 
-const WriteReviewPage = () => {
- 
+const WriteReviewPage = ({
+  location: {
+    state: { movieId },
+  },
+}) => {
+  const [movie] = useMovie(movieId);
+
   return (
-    <PageTemplate
-    title="Add a Review (TODO)"
-    movies={[]}
-    action={(movie) => {
-      return null 
-    }}
-  />
-//    <h1>TODO</h1>
+    <>
+      {movie ? (
+        <>
+          <PageTemplate movie={movie}>
+            <h3>Placeholder for web form</h3>
+          </PageTemplate>
+        </>
+      ) : (
+        <p>Waiting for movie details</p>
+      )}
+    </>
   );
 };
 

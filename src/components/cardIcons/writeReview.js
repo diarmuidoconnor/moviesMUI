@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 const WriteReviewIcon = ({ movie }) => {
   return (
     <Link
-    to={{
-      pathname: `/reviews/form`,
-      state: {
-        movie: movie,
-      },
-    }}
-  >
-    {<RateReviewIcon color="primary" fontSize="large" />}
-  </Link>
+      to={{
+        pathname: `/reviews/form`,
+        state: {
+          movieId: movie.id,
+        },
+      }}
+    >
+      <RateReviewIcon color="primary" fontSize="large" />
+    </Link>
     // <RateReviewIcon color="primary" fontSize="large" />
   );
 };
 
-export default  WriteReviewIcon;
+export default WriteReviewIcon;
