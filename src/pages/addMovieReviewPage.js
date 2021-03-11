@@ -1,6 +1,7 @@
 import React from "react";
 import PageTemplate from "../components/templateMoviePage";
 import useMovie from "../hooks/useMovie";
+import ReviewForm from "../components/reviewForm";
 
 const WriteReviewPage = ({
   location: {
@@ -8,13 +9,12 @@ const WriteReviewPage = ({
   },
 }) => {
   const [movie] = useMovie(movieId);
-
   return (
     <>
       {movie ? (
         <>
           <PageTemplate movie={movie}>
-            <h3>Placeholder for web form</h3>
+            <ReviewForm movie={movie} />
           </PageTemplate>
         </>
       ) : (
