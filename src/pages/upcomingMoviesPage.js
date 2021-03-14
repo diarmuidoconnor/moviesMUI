@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PageTemplate from '../components/templateMovieListPage'
 import { getUpcomingMovies } from '../api/tmdb-api' 
+import AddToWatchList from '../components/cardIcons/addToWatchList'
+
 const UpcomingMovieListPage = () => {
     const [movies, setMovies] = useState([]);
     const favorites = movies.filter(m => m.favorite)
@@ -25,8 +27,12 @@ const UpcomingMovieListPage = () => {
         movies={movies}
         selectFavorite={addToFavorites}  
         action={(movie) => {
-          return null 
-        }}  
+          return (
+            <>
+              <AddToWatchList movie={movie} />
+            </>
+          );  
+        }}      
       />
   );
 };
