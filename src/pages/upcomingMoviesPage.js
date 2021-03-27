@@ -1,39 +1,28 @@
-import React, { useState, useEffect } from "react";
-import PageTemplate from '../components/templateMovieListPage'
-import { getUpcomingMovies } from '../api/tmdb-api' 
-import AddToWatchList from '../components/cardIcons/addToWatchList'
+import React, { useContext } from "react";
+import PageTemplate from "../components/templateMovieListPage";
+import AddToWatchList from "../components/cardIcons/addToWatchList";
+import { MoviesContext } from "../contexts/moviesContext";
+import MustWatchTag from "../components/cardTag/mustWatchTag";
 
 const UpcomingMovieListPage = () => {
-    const [movies, setMovies] = useState([]);
-    const favorites = movies.filter(m => m.favorite)
-    localStorage.setItem('favorites', JSON.stringify(favorites))
-  
-    const addToFavorites = (movieId) => {
-      const updatedMovies = movies.map((m) =>
-        m.id === movieId ? { ...m, favorite: true } : m
-      );
-      setMovies(updatedMovies);
-    };
-    useEffect(() => {
-      getUpcomingMovies().then(movies => {
-        setMovies(movies);
-      });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  const context = useContext(MoviesContext);
+  const { upcoming } = context;
 
   return (
-      <PageTemplate 
-        title='Upcoming Movies'
-        movies={movies}
-        selectFavorite={addToFavorites}  
-        action={(movie) => {
-          return (
-            <>
-              <AddToWatchList movie={movie} />
-            </>
-          );  
-        }}      
-      />
+    <PageTemplate
+      title="Upcoming Movies"
+      movies={upcoming}
+      action={(movie) => {
+        return (
+          <>
+            <AddToWatchList movie={movie} />
+          </>
+        );
+      }}
+      taging={(movie) => {
+        return <MustWatchTag movie={movie} />;
+      }}
+    />
   );
 };
 

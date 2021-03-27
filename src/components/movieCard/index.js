@@ -7,13 +7,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import CalendarIcon from "@material-ui/icons/CalendarTodayTwoTone";
 import StarRateIcon from "@material-ui/icons/StarRate";
 import Grid from "@material-ui/core/Grid";
 import img from "../../images/film-poster-placeholder.png";
 import { Link } from "react-router-dom";
-import Avatar from "@material-ui/core/Avatar";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   card: { maxWidth: 345 },
@@ -22,21 +21,14 @@ const useStyles = makeStyles({
     backgroundColor: "rgb(255, 0, 0)",
   },
 });
-
-export default function MovieCard({ movie, action }) {
+export default function MovieCard({ movie, action, taging }) {
   const classes = useStyles();
 
   return (
     <Card className={classes.card}>
       <CardHeader
         className={classes.header}
-        avatar={
-          movie.favorite ? (
-            <Avatar className={classes.avatar}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
-        }
+        avatar={taging(movie)}
         title={
           <Typography variant="h5" component="p">
             {movie.title}{" "}
@@ -79,3 +71,11 @@ export default function MovieCard({ movie, action }) {
     </Card>
   );
 }
+
+MovieCard.defaultProps = {
+  taging: (m) => null,
+};
+
+MovieCard.propTypes = {
+  taging: PropTypes.func,
+};

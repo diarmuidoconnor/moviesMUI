@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from "react";
-import { getMovies } from "../api/tmdb-api";
+import { getMovies, getUpcomingMovies } from "../api/tmdb-api";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -8,22 +8,22 @@ const reducer = (state, action) => {
         movies: state.movies.map((m) =>
           m.id === action.payload.movie.id ? { ...m, favorite: true } : m
         ),
-        // upcoming: [...state.upcoming],
+        upcoming: [...state.upcoming],
       };
     case "remove-favorite":
       return {
         movies: state.movies.map((m) =>
           m.id === action.payload.movie.id ? { ...m, favorite: false } : m
         ),
-        // upcoming: [...state.upcoming],
+        upcoming: [...state.upcoming],
       };
     case "load-discover-movies":
       return {
         movies: action.payload.movies,
-        // upcoming: [...state.upcoming]
+        upcoming: [...state.upcoming],
       };
-    // case "load-upcoming":
-    //   return { upcoming: action.payload.movies, movies: [...state.movies] };
+    case "load-upcoming":
+      return { upcoming: action.payload.movies, movies: [...state.movies] };
     case "add-review":
       return {
         movies: state.movies.map((m) =>
@@ -31,7 +31,14 @@ const reducer = (state, action) => {
             ? { ...m, review: action.payload.review }
             : m
         ),
-        // upcoming: [...state.upcoming],
+        upcoming: [...state.upcoming],
+      };
+    case "add-to-watch-list":
+      return {
+        upcoming: state.upcoming.map((m) =>
+          m.id === action.payload.movieId ? { ...m, mustWatch: true } : m
+        ),
+        movies: [...state.movies],
       };
     default:
       return state;
@@ -56,6 +63,10 @@ const MoviesContextProvider = (props) => {
     });
   };
 
+  const addToWatchList = (movieId) => {
+    dispatch({ type: "add-to-watch-list", payload: { movieId } });
+  };
+
   const addReview = (movie, review) => {
     dispatch({ type: "add-review", payload: { movie, review } });
   };
@@ -67,11 +78,20 @@ const MoviesContextProvider = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    getUpcomingMovies().then((movies) => {
+      dispatch({ type: "load-upcoming", payload: { movies } });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <MoviesContext.Provider
       value={{
         movies: state.movies,
+        upcoming: state.upcoming,
         addToFavorites: addToFavorites,
+        addToWatchList,
         removeFromFavorites: removeFromFavorites,
         addReview: addReview,
       }}
