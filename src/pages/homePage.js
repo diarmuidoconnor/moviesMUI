@@ -1,12 +1,21 @@
-import React, { useContext } from "react";
+import React from "react";
 import PageTemplate from "../components/templateMovieListPage";
-import { MoviesContext } from "../contexts/moviesContext";
 import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 import FavoriteTag from "../components/cardTag/favoriteTag";
-
+import { useQuery } from 'react-query'
+import { getMovies } from "../api/tmdb-api";
+  
 const HomePage = (props) => {
-  const context = useContext(MoviesContext);
-  const { movies } = context;
+  const {  data, error, isLoading, isError }  = useQuery('discover', getMovies)
+
+  if (isLoading) {
+    return <h1>Loading</h1>
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>
+  }  
+  const movies = data.results;
 
   return (
     <PageTemplate

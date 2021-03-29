@@ -1,20 +1,23 @@
-export const getMovies = () => {
-  return fetch(
+export const getMovies = async () => {
+  const response = await fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
-  )
-    .then((res) => res.json())
-    .then((json) => {
-      // console.log(json)
-      return json.results;
-    });
+  );
+  if (!response.ok) {
+    throw new Error(response.json().message);
+  }
+  return response.json();
 };
 
-export const getMovie = (id) => {
-  return fetch(
+export const getMovie = async ({ queryKey }) => {
+  // eslint-disable-next-line no-unused-vars
+  const [__key, { id }] = queryKey;
+  const response = await fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-  ).then((res) => {
-    return res.json();
-  });
+  );
+  if (!response.ok) {
+    throw new Error(response.json().message);
+  }
+  return response.json();
 };
 
 export const getGenres = () => {
@@ -38,21 +41,26 @@ export const getMovieImages = (id) => {
     .then((json) => json.posters);
 };
 
-export const getMovieReviews = (id) => {
-  return fetch(
+export const getMovieReviews = async ({ queryKey }) => {
+  // eslint-disable-next-line no-unused-vars
+  const [__key, { id }] = queryKey;
+  const response = await fetch(
     `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${process.env.REACT_APP_TMDB_KEY}`
-  )
-    .then((res) => res.json())
-    .then((json) => {
-      // console.log(json.results);
-      return json.results;
-    });
+  );
+
+  if (!response.ok) {
+    throw new Error(response.json().message);
+  }
+  return response.json();
 };
 
-export const getUpcomingMovies = () => {
-  return fetch(
+export const getUpcomingMovies = async () => {
+  const response = await fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
-  )
-    .then((res) => res.json())
-    .then((json) => json.results);
+  );
+
+  if (!response.ok) {
+    throw new Error(response.json().message);
+  }
+  return response.json();
 };

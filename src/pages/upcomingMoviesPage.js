@@ -1,12 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import AddToWatchList from "../components/cardIcons/addToWatchList";
-import { MoviesContext } from "../contexts/moviesContext";
 import MustWatchTag from "../components/cardTag/mustWatchTag";
+import { useQuery } from "react-query";
+import { getUpcomingMovies } from "../api/tmdb-api";
 
 const UpcomingMovieListPage = () => {
-  const context = useContext(MoviesContext);
-  const { upcoming } = context;
+  const { data, error, isLoading, isError } = useQuery(
+    "upcoming",
+    getUpcomingMovies
+  );
+
+  if (isLoading) {
+    return <h1>Loading</h1>;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+  const upcoming = data.results;
 
   return (
     <PageTemplate

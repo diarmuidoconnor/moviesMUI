@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from "react";
+import React  from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import { Link } from "react-router-dom";
 import { getMovieReviews } from "../../api/tmdb-api";
 import { excerpt } from "../../util";
+import { useQuery } from 'react-query'
 
 const useStyles = makeStyles({
   table: {
@@ -19,15 +20,15 @@ const useStyles = makeStyles({
 
 export default function MovieReviews({ movie }) {
   const classes = useStyles();
-  const [reviews, setReviews] = useState([]);
+  const {  data, error, isLoading, isError }  = useQuery(['reviews', { id: movie.id}], getMovieReviews)
 
-  useEffect(() => {
-    getMovieReviews(movie.id).then((reviews) => {
-      setReviews(reviews);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (isLoading) {
+    return <h1>Loading</h1>
+  }
 
+  if (isError) {
+    return <h1>{error.message}</h1>
+  }  
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="reviews table">
@@ -39,7 +40,7 @@ export default function MovieReviews({ movie }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {reviews.map((r) => (
+          {data.results.map((r) => (
             <TableRow key={r.id}>
               <TableCell component="th" scope="row">
                 {r.author}

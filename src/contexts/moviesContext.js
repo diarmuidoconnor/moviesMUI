@@ -1,5 +1,4 @@
 import React, { useReducer, useEffect } from "react";
-import { getMovies, getUpcomingMovies } from "../api/tmdb-api";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -71,19 +70,19 @@ const MoviesContextProvider = (props) => {
     dispatch({ type: "add-review", payload: { movie, review } });
   };
 
-  useEffect(() => {
-    getMovies().then((movies) => {
-      dispatch({ type: "load-discover-movies", payload: { movies } });
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getMovies().then((movies) => {
+  //     dispatch({ type: "load-discover-movies", payload: { movies } });
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-  useEffect(() => {
-    getUpcomingMovies().then((movies) => {
-      dispatch({ type: "load-upcoming", payload: { movies } });
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getUpcomingMovies().then((movies) => {
+  //     dispatch({ type: "load-upcoming", payload: { movies } });
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <MoviesContext.Provider
