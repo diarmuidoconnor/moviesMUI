@@ -2,12 +2,9 @@ import React from "react";
 import PageTemplate from "../components/templateMoviePage";
 import useMovie from "../hooks/useMovie";
 import ReviewForm from "../components/reviewForm";
-
-const WriteReviewPage = ({
-  location: {
-    state: { movieId },
-  },
-}) => {
+import { useLocation } from 'react-router-dom'
+const WriteReviewPage = () => {
+  const { state: {movieId}} = useLocation()
   const [movie] = useMovie(movieId);
   return (
     <>

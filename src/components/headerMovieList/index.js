@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ title, history }) => {
+const Header = ({ title }) => {
+  const history = useHistory();
   const classes = useStyles();
 
   return (
@@ -35,4 +36,4 @@ const Header = ({ title, history }) => {
   );
 };
 
-export default withRouter(Header);
+export default (Header);

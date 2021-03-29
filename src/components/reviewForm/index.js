@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import useForm from "react-hook-form";
 import { MoviesContext } from "../../contexts/moviesContext";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ReviewForm = ({ movie, history }) => {
+const ReviewForm = ({ movie }) => {
+  const history = useHistory()
   const classes = useStyles();
   const { register, handleSubmit, errors, reset } = useForm();
   const context = useContext(MoviesContext);
@@ -192,4 +193,4 @@ const ReviewForm = ({ movie, history }) => {
   );
 };
 
-export default withRouter(ReviewForm);
+export default (ReviewForm);

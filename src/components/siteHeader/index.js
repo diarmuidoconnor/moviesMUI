@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
 }));
 
-const SiteHeader = ( { history }) => {
+const SiteHeader = ( ) => {
+  const history = useHistory() ;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -109,4 +110,4 @@ const SiteHeader = ( { history }) => {
   );
 };
 
-export default withRouter(SiteHeader);
+export default (SiteHeader);
