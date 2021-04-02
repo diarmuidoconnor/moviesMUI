@@ -12,11 +12,11 @@ const useStyles = makeStyles({
 const FavoritesTag = ({ movie }) => {
   const classes = useStyles();
 
-  return movie.favorite ? (
+  return  (
     <Avatar className={classes.avatar}>
       <FavoriteIcon />
     </Avatar>
-  ) : null;
+  ) 
 };
 
 export default FavoritesTag;

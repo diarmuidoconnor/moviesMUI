@@ -1,9 +1,14 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer } from "react";
+import FavoriteTag from "../components/cardTag/favoriteTag";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "add-favorite":
       return {
+        taggedMovies: {
+          favorites: [...state.taggedMovies.favorites, action.payload.movie.id],
+          mustWatch: [...state.taggedMovies.mustWatch],
+        },
         movies: state.movies.map((m) =>
           m.id === action.payload.movie.id ? { ...m, favorite: true } : m
         ),
@@ -11,6 +16,12 @@ const reducer = (state, action) => {
       };
     case "remove-favorite":
       return {
+        taggedMovies: {
+          favorites: state.taggedMovies.favorites.filter(
+            (mId) => mId !== action.payload.movie.id
+          ),
+          mustWatch: [...state.taggedMovies.mustWatch],
+        },
         movies: state.movies.map((m) =>
           m.id === action.payload.movie.id ? { ...m, favorite: false } : m
         ),
@@ -47,48 +58,44 @@ const reducer = (state, action) => {
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
-  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [] });
+  const [state, dispatch] = useReducer(reducer, {
+    movies: [],
+    upcoming: [],
+    taggedMovies: { favorites: [], mustWatch: [] },
+  });
 
-  const addToFavorites = (movieId) => {
-    const index = state.movies.map((m) => m.id).indexOf(movieId);
-    dispatch({ type: "add-favorite", payload: { movie: state.movies[index] } });
+  const getMovieTag = (movie) => {
+    if (state.taggedMovies.favorites.find((e) => e === movie.id)) {
+      return <FavoriteTag />;
+    } else if (state.taggedMovies.mustWatch.find((e) => e === movie.id))
+      return "mustWatch";
+    else return undefined;
+  };
+  const addToFavorites = (movie) => {
+    dispatch({ type: "add-favorite", payload: { movie: movie } });
   };
 
-  const removeFromFavorites = (movieId) => {
-    const index = state.movies.map((m) => m.id).indexOf(movieId);
+  const removeFromFavorites = (movie) => {
     dispatch({
       type: "remove-favorite",
-      payload: { movie: state.movies[index] },
+      payload: { movie: movie },
     });
   };
 
-  const addToWatchList = (movieId) => {
-    dispatch({ type: "add-to-watch-list", payload: { movieId } });
+  const addToWatchList = (movie) => {
+    dispatch({ type: "add-to-watch-list", payload: { movie: movie } });
   };
 
   const addReview = (movie, review) => {
     dispatch({ type: "add-review", payload: { movie, review } });
   };
 
-  // useEffect(() => {
-  //   getMovies().then((movies) => {
-  //     dispatch({ type: "load-discover-movies", payload: { movies } });
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  // useEffect(() => {
-  //   getUpcomingMovies().then((movies) => {
-  //     dispatch({ type: "load-upcoming", payload: { movies } });
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   return (
     <MoviesContext.Provider
       value={{
-        movies: state.movies,
+        taggedMovies: state.taggedMovies,
         upcoming: state.upcoming,
+        getMovieTag: getMovieTag,
         addToFavorites: addToFavorites,
         addToWatchList,
         removeFromFavorites: removeFromFavorites,

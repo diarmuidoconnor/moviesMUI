@@ -8,7 +8,7 @@ const AddToFavoritesIcon = ({ movie }) => {
 
   const handleAddToFavorites = (e) => {
     e.preventDefault();
-    context.addToFavorites(movie.id);
+    context.addToFavorites(movie);
   };
   return (
     <IconButton aria-label="add to favorites" onClick={handleAddToFavorites}>
