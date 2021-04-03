@@ -4,12 +4,13 @@ import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 import FavoriteTag from "../components/cardTag/favoriteTag";
 import { useQuery } from 'react-query'
 import { getMovies } from "../api/tmdb-api";
-  
+import Spinner from '../components/spinner'
+
 const HomePage = (props) => {
   const {  data, error, isLoading, isError }  = useQuery('discover', getMovies)
 
   if (isLoading) {
-    return <h1>Loading</h1>
+    return <Spinner />
   }
 
   if (isError) {

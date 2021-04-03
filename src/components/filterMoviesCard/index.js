@@ -13,6 +13,7 @@ import Select from "@material-ui/core/Select";
 import img from "../../images/pexels-dziana-hasanbekava-5480827.jpg";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
+import Spinner from '../spinner'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,7 @@ export default function FilterMoviesCard(props) {
   const { data, error, isLoading, isError } = useQuery("genres", getGenres);
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Spinner />;
   }
 
   if (isError) {

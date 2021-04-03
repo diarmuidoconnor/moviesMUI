@@ -5,6 +5,7 @@ import RemoveFromFavorites from "../components/cardIcons/removeFromfavorites";
 import WriteReview from "../components/cardIcons/writeReview";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
+import Spinner from '../components/spinner'
 
 const FavoriteMoviesPage = () => {
   const context = useContext(MoviesContext);
@@ -12,7 +13,7 @@ const FavoriteMoviesPage = () => {
   const favoriteMovieQueries = useQueries(
     movieIds.map((movieId) => {
       return {
-        queryKey: ["favorite", { id: movieId }],
+        queryKey: ["movie", { id: movieId }],
         queryFn: getMovie,
       };
     })
@@ -20,7 +21,7 @@ const FavoriteMoviesPage = () => {
   const isLoading = favoriteMovieQueries.find((m) => m.isLoading === true);
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Spinner />;
   }
 
   const favoriteMovies = favoriteMovieQueries.map((q) => q.data);

@@ -32,12 +32,15 @@ export const getGenres = async () => {
   return response.json();
 };
 
-export const getMovieImages = (id) => {
-  return fetch(
+export const getMovieImages = async ({queryKey}) => {
+  const [__key, { id }] = queryKey;
+  const response = await fetch(
     `https://api.themoviedb.org/3/movie/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}`
   )
-    .then((res) => res.json())
-    .then((json) => json.posters);
+  if (!response.ok) {
+    throw new Error(response.json().message);
+  }
+  return response.json();
 };
 
 export const getMovieReviews = async ({ queryKey }) => {

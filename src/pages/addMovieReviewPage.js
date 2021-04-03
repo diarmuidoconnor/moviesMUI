@@ -4,6 +4,7 @@ import ReviewForm from "../components/reviewForm";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getMovie } from "../api/tmdb-api";
+import Spinner from '../components/spinner'
 
 const WriteReviewPage = () => {
   const {
@@ -15,7 +16,7 @@ const WriteReviewPage = () => {
   );
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Spinner />;
   }
 
   if (isError) {

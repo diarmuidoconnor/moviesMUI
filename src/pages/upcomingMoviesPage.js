@@ -3,6 +3,7 @@ import PageTemplate from "../components/templateMovieListPage";
 import AddToWatchList from "../components/cardIcons/addToWatchList";
 import { useQuery } from "react-query";
 import { getUpcomingMovies } from "../api/tmdb-api";
+import Spinner from '../components/spinner'
 
 const UpcomingMovieListPage = () => {
   const { data, error, isLoading, isError } = useQuery(
@@ -11,7 +12,7 @@ const UpcomingMovieListPage = () => {
   );
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Spinner />;
   }
 
   if (isError) {
