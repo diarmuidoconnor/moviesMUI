@@ -9,7 +9,7 @@ import Spinner from '../components/spinner'
 
 const FavoriteMoviesPage = () => {
   const context = useContext(MoviesContext);
-  const movieIds = context.taggedMovies.favorites;
+  const movieIds = context.favorites;
   const favoriteMovieQueries = useQueries(
     movieIds.map((movieId) => {
       return {
