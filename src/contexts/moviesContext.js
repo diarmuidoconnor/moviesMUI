@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import FavoriteTag from "../components/cardTag/favoriteTag";
+import MustWatchTag from '../components/cardTag/mustWatchTag'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -45,6 +46,10 @@ const reducer = (state, action) => {
       };
     case "add-to-watch-list":
       return {
+        taggedMovies: {
+          mustWatch: [...state.taggedMovies.mustWatch, action.payload.movie.id],
+          favorites: [...state.taggedMovies.favorites],
+        },
         upcoming: state.upcoming.map((m) =>
           m.id === action.payload.movieId ? { ...m, mustWatch: true } : m
         ),
@@ -65,10 +70,10 @@ const MoviesContextProvider = (props) => {
   });
 
   const getMovieTag = (movie) => {
-    if (state.taggedMovies.favorites.find((e) => e === movie.id)) {
+    if (state.taggedMovies.favorites.find((id) => id === movie.id)) {
       return <FavoriteTag />;
-    } else if (state.taggedMovies.mustWatch.find((e) => e === movie.id))
-      return "mustWatch";
+    } else if (state.taggedMovies.mustWatch.find((id) => id === movie.id))
+      return <MustWatchTag />;
     else return undefined;
   };
   const addToFavorites = (movie) => {

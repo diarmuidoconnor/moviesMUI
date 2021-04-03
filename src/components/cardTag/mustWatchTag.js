@@ -12,11 +12,11 @@ const useStyles = makeStyles({
 const MustWatchTag = ({ movie }) => {
   const classes = useStyles();
 
-  return movie.mustWatch ? (
+  return  (
     <Avatar className={classes.avatar}>
       <PlaylistAddCheckIcon />
     </Avatar>
-  ) : null;
+  );
 };
 
 export default MustWatchTag;

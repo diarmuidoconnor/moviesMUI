@@ -1,7 +1,6 @@
 import React from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import AddToWatchList from "../components/cardIcons/addToWatchList";
-import MustWatchTag from "../components/cardTag/mustWatchTag";
 import { useQuery } from "react-query";
 import { getUpcomingMovies } from "../api/tmdb-api";
 
@@ -19,7 +18,7 @@ const UpcomingMovieListPage = () => {
     return <h1>{error.message}</h1>;
   }
   const upcoming = data.results;
-
+ 
   return (
     <PageTemplate
       title="Upcoming Movies"
@@ -30,9 +29,6 @@ const UpcomingMovieListPage = () => {
             <AddToWatchList movie={movie} />
           </>
         );
-      }}
-      taging={(movie) => {
-        return <MustWatchTag movie={movie} />;
       }}
     />
   );

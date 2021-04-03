@@ -9,7 +9,6 @@ import MovieReviewPage from "./pages/movieReviewPage";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import SiteHeader from "./components/siteHeader";
 import MoviesContextProvider from "./contexts/moviesContext";
-import GenresContextProvider from "./contexts/genresContext";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 
@@ -21,7 +20,6 @@ const App = () => {
       <BrowserRouter>
         <SiteHeader />
         <MoviesContextProvider>
-          <GenresContextProvider>
             {" "}
             <Switch>
               <Route
@@ -44,7 +42,6 @@ const App = () => {
               <Route exact path="/" component={HomePage} />
               <Redirect from="*" to="/" />
             </Switch>
-          </GenresContextProvider>{" "}
         </MoviesContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

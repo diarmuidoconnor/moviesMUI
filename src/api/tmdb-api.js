@@ -20,17 +20,16 @@ export const getMovie = async ({ queryKey }) => {
   return response.json();
 };
 
-export const getGenres = () => {
-  return fetch(
+export const getGenres = async () => {
+  const response = await  fetch(
     "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
       process.env.REACT_APP_TMDB_KEY +
       "&language=en-US"
   )
-    .then((res) => res.json())
-    .then((json) => {
-      // console.log(json)
-      return json.genres;
-    });
+  if (!response.ok) {
+    throw new Error(response.json().message);
+  }
+  return response.json();
 };
 
 export const getMovieImages = (id) => {

@@ -1,23 +1,30 @@
 import React from "react";
 import PageTemplate from "../components/templateMoviePage";
-import useMovie from "../hooks/useMovie";
 import ReviewForm from "../components/reviewForm";
-import { useLocation } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getMovie } from "../api/tmdb-api";
+
 const WriteReviewPage = () => {
-  const { state: {movieId}} = useLocation()
-  const [movie] = useMovie(movieId);
+  const {
+    state: { movieId },
+  } = useLocation();
+  const { data: movie, error, isLoading, isError } = useQuery(
+    ["movie", { id: movieId }],
+    getMovie
+  );
+
+  if (isLoading) {
+    return <h1>Loading</h1>;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
   return (
-    <>
-      {movie ? (
-        <>
-          <PageTemplate movie={movie}>
-            <ReviewForm movie={movie} />
-          </PageTemplate>
-        </>
-      ) : (
-        <p>Waiting for movie details</p>
-      )}
-    </>
+    <PageTemplate movie={movie}>
+      <ReviewForm movie={movie} />
+    </PageTemplate>
   );
 };
 

@@ -6,30 +6,25 @@ import { useQuery } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 
 const MovieDetailsPage = () => {
-  const {id} = useParams()
-  const {  data, error, isLoading, isError }  = useQuery(['movie', { id: id}], getMovie)
+  const { id } = useParams();
+  const { data: movie, error, isLoading, isError } = useQuery(
+    ["movie", { id: id }],
+    getMovie
+  );
 
   if (isLoading) {
-    return <h1>Loading</h1>
+    return <h1>Loading</h1>;
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>
-  }  
+    return <h1>{error.message}</h1>;
+  }
   // const [movie] = useMovie(id);
   return (
-    <>
-      {data ? (
-        <>
-          <PageTemplate movie={data}>
-            <MovieDetails movie={data} />
-          </PageTemplate>
-        </>
-      ) : (
-        <p>Waiting for movie details</p>
-      )}
-    </>
+    <PageTemplate movie={movie}>
+      <MovieDetails movie={movie} />
+    </PageTemplate>
   );
 };
 
-export default (MovieDetailsPage);
+export default MovieDetailsPage;
