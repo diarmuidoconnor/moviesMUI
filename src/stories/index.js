@@ -10,6 +10,7 @@ import SiteHeader from '../src/components/siteHeader'
 import Grid from "@material-ui/core/Grid";
 import { MemoryRouter } from "react-router";
 import GenresContextProvider from "../src/contexts/genresContext";
+import MoviesContextProvider from "../src/contexts/moviesContext";
 import { action } from "@storybook/addon-actions";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -133,6 +134,9 @@ storiesOf("Home Page/FilterMoviesCard", module)
 storiesOf("Home Page/Header", module)
   .addDecorator((story) => (
     <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>
+  ))
+  .addDecorator((story) => (
+    <MoviesContextProvider>{story()}</MoviesContextProvider  >
   ))
   .add("default", () => <MoviesHeader title="Discover Movies" />);
 
