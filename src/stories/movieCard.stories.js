@@ -37,5 +37,3 @@ export const Exceptional = () => {
   );
 };
 Exceptional.storyName = "exception";
-
-// Primary.storyName = 'Default';

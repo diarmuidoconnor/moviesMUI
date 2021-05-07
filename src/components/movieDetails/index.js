@@ -34,9 +34,6 @@ const useStyles = makeStyles((theme) => ({
 const MovieDetails = ({ movie }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const toggleDrawer = (open) => {
-    return () => setDrawerOpen(open);
-  };
 
   return (
     <>
@@ -83,13 +80,13 @@ const MovieDetails = ({ movie }) => {
       <Fab
         color="secondary"
         variant="extended"
-        onClick={toggleDrawer(true)}
+        onClick={() =>setDrawerOpen(true)}
         className={classes.fab}
       >
         <NavigationIcon />
         Reviews
       </Fab>
-      <Drawer anchor="top" open={drawerOpen} onClose={toggleDrawer(false)}>
+      <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
       </>

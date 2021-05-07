@@ -15,14 +15,14 @@ function MovieListPageTemplate({ movies, title, action, taging }) {
   const classes = useStyles();
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
-  const genre = Number(genreFilter);
+  const genreId = Number(genreFilter);
 
   let displayedMovies = movies
     .filter((m) => {
       return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
     })
     .filter((m) => {
-      return genre > 0 ? m.genre_ids.includes(Number(genreFilter)) : true;
+      return genreId > 0 ? m.genre_ids.includes(genreId) : true;
     });
 
   const handleChange = (type, value) => {
